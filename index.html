@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>toDo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,200,300,500,600,700&subset=latin-ext' rel='stylesheet'
+        type='text/css'>
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/to-do.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div id="toDo-app">
+        <new-task-modal v-if="modalVisible" @close="modalVisible = false"></new-task-modal>
+        <div class="container box-shadow">
+
+            <h1 class="mt-4 title-main">toDO</h1>
+
+            <div class="menu bg-yellow clickable" @click="addTask">
+                <span class="button-addTask">
+                    <i class="fa fa-plus" style="margin-right:8px;"></i>add task</span>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" @click="statusFilter = true">Show done</button>
+                    <button type="button" class="btn btn-secondary" @click="statusFilter = false">Show in progress</button>
+                  </div>
+            <h4 class="mt-5 mb-4 title-tasklist">tasks</h4>
+            <div class="loader">
+                <i v-if="!taskList" class="fa fa-spin fa-circle-o-notch fa-4x" aria-hidden="true"></i>
+            </div>
+            <div class="task-entry mb-3" v-for="task in taskList" v-cloak v-bind:class="{'task-entry-done':task.status}" v-if="task.status === statusFilter">
+                <div class="row">
+                    <div class="task-status clickable" v-on:click="task.status = !task.status;updateTask(task)">
+                        <i class="far" v-bind:class="{ 'fa-check-square': task.status, 'fa-square': !task.status }" ></i>
+                        
+                    </div>
+                    <div class="col-xs-10 task-text">
+                        <input class="" placeholder="Enter task name..." v-model.lazy="task.name" @change="updateTask(task)"></input>
+                        <div class="text-center task-remove clickable" @click="removeTask(task.id)">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="js/toDo.js"></script>
+    <!--<script src="js/calendar.js"></script> -->
+</body>
+
+</html>
