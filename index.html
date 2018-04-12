@@ -9,7 +9,7 @@
 
     <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,200,300,500,600,700&subset=latin-ext' rel='stylesheet'
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&subset=latin-ext' rel='stylesheet'
         type='text/css'>
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -17,51 +17,54 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/to-do.css">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+        crossorigin="anonymous">
 
 </head>
 
 <body>
     <div id="toDo-app">
-        <new-task-modal v-if="modalVisible" @close="modalVisible = false"></new-task-modal>
         <div class="container box-shadow">
+            <h1 class="title-main mt-4">toDO</h1>
 
-            <h1 class="mt-4 title-main">toDO</h1>
-
-            <div class="menu bg-yellow clickable" @click="addTask">
-                <span class="button-addTask">
-                    <i class="fa fa-plus" style="margin-right:8px;"></i>add task</span>
+            <div class="add-task-block clickable" @click="addTask">
+                <button type="button" class="btn btn-add-task">
+                    <i class="fa fa-plus"></i> add task
+                </button>
             </div>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-secondary" @click="statusFilter = true">Show done</button>
-                    <button type="button" class="btn btn-secondary" @click="statusFilter = false">Show in progress</button>
-                  </div>
-            <h4 class="mt-5 mb-4 title-tasklist">tasks</h4>
+            <h5 class="title-tasklist my-4 ">tasks</h5>
+
+            <div class="task-filters my-4" role="toolbar" aria-label="Task filters">
+                <button v-for="button in filter.buttons" type="button" class="btn" v-bind:class="{'active': filter.active === button.type}"
+                    @click="filter.active = button.type">{{button.name}}
+                    <span class="counter" v-show="button.type === true">({{completedQty}})</span>
+                    <span class="counter" v-show="button.type === false">({{pendingdQty}})</span>
+                </button>
+            </div>
+
             <div class="loader">
                 <i v-if="!taskList" class="fa fa-spin fa-circle-o-notch fa-4x" aria-hidden="true"></i>
             </div>
-            <div class="task-entry mb-3" v-for="task in taskList" v-cloak v-bind:class="{'task-entry-done':task.status}" v-if="task.status === statusFilter">
-                <div class="row">
-                    <div class="task-status clickable" v-on:click="task.status = !task.status;updateTask(task)">
-                        <i class="far" v-bind:class="{ 'fa-check-square': task.status, 'fa-square': !task.status }" ></i>
-                        
-                    </div>
-                    <div class="col-xs-10 task-text">
-                        <input class="" placeholder="Enter task name..." v-model.lazy="task.name" @change="updateTask(task)"></input>
-                        <div class="text-center task-remove clickable" @click="removeTask(task.id)">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
+
+            <div class="task-entry mb-3" v-for="task in taskList" v-cloak v-bind:class="{'task-entry-done':task.status}" v-show="taskFilter(task)">
+                <div class="task-status clickable" @click="toggleStatus(task)">
+                    <i class="far" v-bind:class="{ 'fa-check-circle': task.status, 'fa-circle': !task.status }"></i>
+                </div>
+                <div class="task-text pl-3">
+                    <input class="" placeholder="Enter task name..." v-model.lazy="task.name" @change="updateTask(task)"></input>
+                </div>
+                <div class="task-remove clickable" @click="removeTask(task.id)">
+                    <i class="far fa-trash-alt"></i>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="js/toDo.js"></script>
-    <!--<script src="js/calendar.js"></script> -->
 </body>
 
 </html>

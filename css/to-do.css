@@ -1,68 +1,80 @@
-
-/* Customized elements
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
 body{
     color: #1A1818;
     font-weight: 400;
     font-family: "Work Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #FCFAFA ;
+    background-color: #FCFAFA;
 }
 
-
-.button {
-    width: 140px;
-    background: #EEF8FF;
+.add-task-block {
+    border-radius: 3px;
+    line-height: 300%;
+    background: #b2adfa;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
 }
 
-.button-closeTask {
-    float: right;
+.add-task-block:hover {
+    opacity: 0.75;
 }
 
 .clickable {
     cursor: pointer;
 }
 
-.button-addTask {
-    font-weight: 600;
-    margin-left: 10px;
-    display: inline-block;
+.btn-add-task {
+    font-weight: 600;    
+    background: none;
 }
 
-
-.alert {
-    color: #F3450F;
-    margin-top: -3rem;
-    height: 2rem;
-    margin-bottom: 1rem;
-    opacity: 0;
-}
-
+/* headings
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .title-main {
-    font-weight: 700;
+        font-weight: 700;
 }
 
 .title-tasklist {
-    border-bottom: 4px solid #E9F00C;
+    border-bottom: 2px solid #1A1818;
 }
 
-.menu {
-    padding: 10px;
+
+/* task filter
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.task-filters {
     border-radius: 3px;
+    background: #DFD9D5;
 }
 
-.menu:hover{
-    color: #FCFAFA;
+.task-filters button {
+    background: none;
+    border-radius: 0;
+    font-weight: 400;
+    transition: all 0.1s ease-in-out;
+
 }
 
+.task-filters button:hover {
+    opacity: 0.75;
+}
+
+.task-filters .active {
+    font-weight: 600;
+}
+
+.counter {
+    font-size: 0.9rem;
+}
 
 /* tasklist elements 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.loader{
+.loader {
     text-align: center;
-    color:#E9F00C;
+    color:#b2adfa;
 }
 
 .task-entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background: #F5F3F0;
     border-radius: 3px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.10), 2px 4px 4px rgba(0, 0, 0, 0.10);
@@ -73,6 +85,7 @@ body{
 
 .task-entry input {
     float:left;
+    width: 100%;
     border: none;
     outline: 0;
     background: none;
@@ -81,7 +94,6 @@ body{
 .task-entry:hover .task-remove {
     opacity: 1;
 }
-
 
 .task-entry-done input{
     color: #999;
@@ -92,25 +104,23 @@ body{
     background: #01CCA5;
 }
 
-.task-entry-done:hover {
-
-}
 .task-status {
-    margin-left: 15px;
-    min-width: 40px;
+    min-width: 50px;
     color: #1A1818;
-    background: rgb(223, 217, 213);
+    background: #DFD9D5;
+}
+
+.task-status:hover {
+    opacity: 0.8;
 }
 
 .task-text {
+    flex-grow: 1;
 }
 
 .task-remove {
-    margin-right: -15px;
-    display: block;
-    float: right;
-    width: 50px;
-    height: 100%;
+    min-width: 50px;
+    text-align: center;
     opacity: 0;
     transition: all 0.15s ease-in-out;
 }
@@ -123,13 +133,4 @@ body{
 
 /* 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-.bg-yellow {
-    background: #E9F00C;
-}
-
-.bg-cyan {
-    background: #016975;
-}
-
 
