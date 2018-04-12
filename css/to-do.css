@@ -129,8 +129,20 @@ body{
     background: #F3450F;
     color: #EEF8FF;
 }
+[v-cloak] {
+    display: none;
+}
 
-
-/* 
+/* Animation
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.task-fade-leave-active {
+    transition: all .12s;
+}
 
+.task-fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+.task-fade-move {
+    transition: all .16s;
+}

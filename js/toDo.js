@@ -59,6 +59,7 @@ const todo = new Vue({
             active: "all",
         },
         taskList: [],
+        taskList: []
     },
     methods: {
         refreshTasks: function (snapshot) {
@@ -106,27 +107,24 @@ const todo = new Vue({
         },
     },
     computed: {
-        completedQty: function(){
+        completedQty: function () {
             let total = 0;
-            this.taskList.forEach(function(task){
-                if(task.status === true){
+            this.taskList.forEach(function (task) {
+                if (task.status === true) {
                     total++;
                 }
             })
             return total;
         },
-        pendingdQty: function(){
+        pendingdQty: function () {
             let total = 0;
-            this.taskList.forEach(function(task){
-                if(task.status === false){
+            this.taskList.forEach(function (task) {
+                if (task.status === false) {
                     total++;
                 }
             })
             return total;
-
         },
-}
-
-
+    }
 })
 
