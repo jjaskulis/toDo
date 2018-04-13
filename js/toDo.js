@@ -11,7 +11,7 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
-database.ref().on('value', function (snapshot) {
+database.ref("tasks").on('value', function (snapshot) {
     todo.refreshTasks(snapshot);
 });
 
@@ -80,10 +80,10 @@ const todo = new Vue({
                 date: "",
                 status: false,
             }
-            database.ref().push(newTask);
+            database.ref("/tasks/").push(newTask);
         },
         removeTask: function (id) {
-            database.ref(id).remove();
+            database.ref("/tasks/" + id).remove();
         },
         updateTask: function (task) {
             let updateTask = {
@@ -91,7 +91,7 @@ const todo = new Vue({
                 date: task.date,
                 status: task.status
             };
-            database.ref(task.id).update(updateTask);
+            database.ref("/tasks/"+task.id).update(updateTask);
         },
         toggleStatus: function (task) {
             task.status = !task.status;
