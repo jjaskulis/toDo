@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div id="toDo-app">
+    <div id="toDo-app" v-cloak>
         <div class="container box-shadow">
             <h1 class="title-main mt-4">toDO</h1>
 
@@ -31,7 +31,7 @@
             <h5 class="title-tasklist my-4 ">tasks</h5>
 
             <div class="task-filters my-4" role="toolbar">
-                <button type="button" class="btn" v-cloak v-for="button in filter.buttons" v-bind:class="{'active': filter.active === button.type}"
+                <button class="btn" type="button" v-for="button in filter.buttons" v-bind:class="{'active': filter.active === button.type}"
                     @click="filter.active = button.type">{{button.name}}
                     <span class="counter" v-show="button.type === true">({{completedQty}})</span>
                     <span class="counter" v-show="button.type === false">({{pendingdQty}})</span>
@@ -42,19 +42,9 @@
                 <i class="fas fa-spin fa-circle-notch fa-4x"></i>
             </div>
             <transition-group name="task-fade" mode="out-in">
-
-                <div class="task-entry mb-3" v-cloak v-if="taskFilter(task)" v-for="task in taskList" v-bind:key="taskFilter(task)" v-bind:class="{'task-entry-done':task.status}" >
-                        <div class="task-status clickable" @click="toggleStatus(task)">
-                            <i class="far" v-bind:class="{ 'fa-check-circle': task.status, 'fa-circle': !task.status }"></i>
-                        </div>
-                        <div class="task-text pl-3">
-                            <input class="" placeholder="Enter task name..." v-model.lazy="task.name" @change="updateTask(task)"></input>
-                        </div>
-                        <div class="task-remove clickable" @click="removeTask(task.id)">
-                            <i class="far fa-trash-alt"></i>
-                        </div>
-                </div>
+                <task-item v-for="task in taskList" v-bind:key="taskFilter(task)" v-show="taskFilter(task)" :task="task" @toggle="toggleTask(task)" @update="updateTask(task)" @remove="removeTask(task.id)"></task-item>
             </transition-group>
+
         </div>
     </div>
     </div>

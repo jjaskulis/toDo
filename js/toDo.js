@@ -16,22 +16,24 @@ database.ref("tasks").on('value', function (snapshot) {
 });
 
 // Vue components
-
-Vue.component('date-picker', {
+Vue.component('task-item', {
+    props:['task'],
     template: `
-    <div class="container">
-        <div id="calendar">
-            <div id="year"></div>
-            <span class="prev clickable color-blue"><</span>
-            <span class="next clickable color-blue">></span>
-            <div id="month"></div>
-            <!-- <div id="daynames">Mon Tue Wed Thu Fri Sat Sun </div>-->
-            <div id="days"> </div>
-        </div>
-    </div>
-    `
-})
+    <div class="task-entry mb-3" v-bind:class="{'task-entry-done':task.status}" >
 
+    <div class="task-status clickable" @click="$emit('toggle')">
+        <i class="far" v-bind:class="{ 'fa-check-circle': task.status, 'fa-circle': !task.status }"></i>
+    </div>
+
+    <div class="task-text pl-3">
+        <input class="" placeholder="Enter task name..." v-model.lazy="task.name" @change="$emit('update')"></input>
+    </div>
+
+    <div class="task-remove clickable" @click="$emit('remove')">
+        <i class="far fa-trash-alt"></i>
+    </div>
+</div>`
+})
 
 // Vue instance
 const todo = new Vue({
@@ -58,8 +60,7 @@ const todo = new Vue({
             },
             active: "all",
         },
-        taskList: [],
-        taskList: []
+        taskList: []    
     },
     methods: {
         refreshTasks: function (snapshot) {
@@ -91,9 +92,9 @@ const todo = new Vue({
                 date: task.date,
                 status: task.status
             };
-            database.ref("/tasks/"+task.id).update(updateTask);
+            database.ref("/tasks/" + task.id).update(updateTask);
         },
-        toggleStatus: function (task) {
+        toggleTask: function (task) {
             task.status = !task.status;
             this.updateTask(task);
         },
